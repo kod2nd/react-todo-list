@@ -8,8 +8,8 @@ const ToDoList = (props) => {
       <div>
         <Title headerName={props.header} />
         <ul>
-          {props.todos.map((task, index) => {
-            return <Task key={index} index={index} task={task} toggleDone={props.toggleDone} removeItemOnClick={props.removeItemOnClick}/>;
+          {props.todos.map((object, index) => {
+            return <Task key={index} index={index} task={object} toggleDone={props.toggleDone} removeItemOnClick={props.removeItemOnClick}/>;
           })}
         </ul>
       </div>
