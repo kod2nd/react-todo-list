@@ -9,7 +9,6 @@ class App extends Component {
     super()
     this.state = {
       inputValue: "",
-      // todos: ['Buy Item', 'Complete Task', 'Do Something']
       todos: todos
     }
 
@@ -19,50 +18,54 @@ class App extends Component {
       <ToDoList header="To Do List"
         todos={this.state.todos}
         removeItemOnClick={(event) => this.removeItemOnClick(event)}
-        toggleDone={(event) => { this.toggleDone(event) }} />
+        toggleDone={(index) => { this.toggleDone(index) }} />
 
       <InputForm value={this.state.inputValue}
         onChangeHandler={(event) => { this.inputChangeHandler(event) }}
-        submit={() => this.addItemOnClick()}
-        onKeyDown={(event) => { this.onKeyDownHandler(event) }} />
+        addItemOnSubmit={(event) => this.addItemOnSubmit(event)} />
 
     </div>);
   }
 
 
-  toggleDone(event) {
-    // console.log(event.target)
-    event.target.classList.toggle("done");
+  toggleDone(index) {
+    console.log(index)
+    // const index = this.state.todos.indexOf(index);
+    const updatedTodo = {
+      name: this.state.todos[index].name,
+      isCompleted: this.state.todos[index].isCompleted === true ? false : true
+    };
+
+    // console.log(event)
+
+    this.setState({
+      todos: [
+        ...this.state.todos.slice(0, index),
+        updatedTodo,
+        ...this.state.todos.slice(index+1)
+      ]
+    });
   }
 
-  // Question for David/Sahil: How to remove item without using the ID?
+  // Question for David/Sahil: How to remove item without using the buttons ID?
   removeItemOnClick(event) {
-    console.log(event.target.id)
     this.setState({ todos: this.state.todos.filter((item) => item !== this.state.todos[event.target.id]) })
-    console.log("this state todos are:" + this.state.todos)
   }
 
   inputChangeHandler(event) {
-    console.log(event.target.value)
     this.setState({
       inputValue: event.target.value
     })
   }
 
-  addItemOnClick() {
+  addItemOnSubmit(event) {
+    event.preventDefault()
     const newTask = {
       name: this.state.inputValue,
       isCompleted: false
     }
     if (this.state.inputValue.trim() !== "") {
       this.setState({ todos: [...this.state.todos, newTask] })
-      this.setState({ inputValue: "" })
-    }
-  }
-
-  onKeyDownHandler(event) {
-    if (event.keyCode === 13 && this.state.inputValue.trim() !== "") {
-      this.setState({ todos: [...this.state.todos, this.state.inputValue] })
       this.setState({ inputValue: "" })
     }
   }
