@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ToDoList from './ToDoList'
 import InputForm from './InputForm'
-import {todos} from '../seedData'
+import { todos } from '../seedData'
 import "./App.css";
 
 class App extends Component {
@@ -50,11 +50,14 @@ class App extends Component {
   }
 
   addItemOnClick() {
-    const newTask = {name:this.state.inputValue,
-    isCompleted: false}
-    if(this.state.inputValue.trim() !== ""){
-    this.setState({ todos: [...this.state.todos, newTask] })
-    this.setState({ inputValue: "" })}
+    const newTask = {
+      name: this.state.inputValue,
+      isCompleted: false
+    }
+    if (this.state.inputValue.trim() !== "") {
+      this.setState({ todos: [...this.state.todos, newTask] })
+      this.setState({ inputValue: "" })
+    }
   }
 
   onKeyDownHandler(event) {
